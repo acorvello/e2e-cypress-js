@@ -1,0 +1,13 @@
+{
+  "name": "e2e-cypress-js",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Suite de testes E2E em Cypress contra o OWASP Juice Shop",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
+  },
+  "devDependencies": {
+    "cypress": "13.15.0"
+  }
+}
