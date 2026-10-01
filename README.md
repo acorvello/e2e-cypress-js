@@ -1,15 +1,15 @@
 # e2e-cypress-js
 
-Suite de testes E2E em **Cypress** validando o fluxo de login do
-[OWASP Juice Shop](https://owasp.org/www-project-juice-shop/), usada como
-alvo de prática de automação de testes.
+End-to-end test suite built with **Cypress**, validating the login flow of
+the [OWASP Juice Shop](https://owasp.org/www-project-juice-shop/), used
+here as a target application for test automation practice.
 
 ## Stack
 
 - Cypress 13.15.0
 - JavaScript
 
-## Estrutura
+## Project structure
 
 ```
 e2e-cypress-js/
@@ -22,31 +22,33 @@ e2e-cypress-js/
         └── e2e.js
 ```
 
-## Como rodar localmente
+## Running locally
 
-Pré-requisito: Node.js e uma instância do Juice Shop rodando (local ou
-via container) na URL definida em `CYPRESS_baseUrl`.
+Prerequisite: Node.js and a running instance of Juice Shop (locally or in
+a container) reachable at the URL set in `CYPRESS_baseUrl`.
 
 ```bash
 npm install
 CYPRESS_baseUrl=http://localhost:3001 npx cypress run
 ```
 
-## Como rodar via Docker (sem instalar Node)
+## Running via Docker (no local Node.js install required)
 
-Este repositório é consumido pelo ambiente de orquestração
-[docker-test-env](#), que sobe o Juice Shop e executa esta suíte dentro do
-container oficial `cypress/included`, orquestrado também por um pipeline
-Jenkins. Veja o `docker-compose.yml` desse projeto para o setup completo.
+This repository is consumed by the
+[docker-test-env](https://github.com/acorvello/docker-test-env)
+orchestration project, which spins up Juice Shop and runs this suite
+inside the official `cypress/included` container image, triggered by a
+Jenkins pipeline. See that project's `docker-compose.yml` for the full
+setup.
 
-## Casos cobertos
+## Covered scenarios
 
-- Carregamento da página inicial e listagem de produtos
-- Abertura do formulário de login
-- Exibição de erro ao tentar logar com credenciais inválidas
+- Home page loads and lists products
+- Login form opens correctly
+- Error message is shown when logging in with invalid credentials
 
-## Próximos passos
+## Next steps
 
-- Cobrir fluxo de carrinho e checkout
-- Adicionar testes de API além dos testes de UI
-- Integrar com geração de cenários via IA generativa
+- Cover the cart and checkout flow
+- Add API tests alongside the UI tests
+- Integrate with AI-generated test scenario creation
