@@ -18,14 +18,16 @@ describe("Juice Shop - Fluxo de Login", () => {
 
   it("deve abrir o formulário de login", () => {
     cy.get("#navbarAccount").click();
-    cy.get("#navbarLoginButton").click();
+    // force: true — o botão fica coberto pelo overlay de animação do
+    // menu do Angular Material por um instante, mesmo já sendo clicável.
+    cy.get("#navbarLoginButton").click({ force: true });
     cy.get("#email").should("be.visible");
     cy.get("#password").should("be.visible");
   });
 
   it("deve exibir erro ao tentar login com credenciais inválidas", () => {
     cy.get("#navbarAccount").click();
-    cy.get("#navbarLoginButton").click();
+    cy.get("#navbarLoginButton").click({ force: true });
     cy.get("#email").type("usuario_invalido@teste.com");
     cy.get("#password").type("senhaErrada123");
     cy.get("#loginButton").click();
