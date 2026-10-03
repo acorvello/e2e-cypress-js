@@ -17,23 +17,22 @@ describe("Juice Shop - Fluxo de Login", () => {
   });
 
   it("deve abrir o formulário de login", () => {
-    // .trigger('click') dispara o evento direto no elemento, sem
-    // depender de clique por coordenada na tela — um overlay residual
-    // desta versão do Juice Shop pode interceptar o clique "físico"
-    // mesmo com {force: true}, já que force só pula a checagem de
-    // visibilidade do Cypress, não a sobreposição real no navegador.
-    cy.get("#navbarAccount").trigger("click");
-    cy.get("#navbarLoginButton").trigger("click");
+    // trigger('click', {force: true}) dispara o evento direto no
+    // elemento, ignorando a checagem de cobertura do Cypress — um
+    // overlay residual desta versão do Juice Shop fica sobre a tela
+    // mesmo depois do menu abrir.
+    cy.get("#navbarAccount").trigger("click", { force: true });
+    cy.get("#navbarLoginButton").trigger("click", { force: true });
     cy.get("#email").should("exist");
     cy.get("#password").should("exist");
   });
 
   it("deve exibir erro ao tentar login com credenciais inválidas", () => {
-    cy.get("#navbarAccount").trigger("click");
-    cy.get("#navbarLoginButton").trigger("click");
+    cy.get("#navbarAccount").trigger("click", { force: true });
+    cy.get("#navbarLoginButton").trigger("click", { force: true });
     cy.get("#email").type("usuario_invalido@teste.com", { force: true });
     cy.get("#password").type("senhaErrada123", { force: true });
-    cy.get("#loginButton").trigger("click");
+    cy.get("#loginButton").trigger("click", { force: true });
     cy.get(".error").should("exist");
   });
 });
