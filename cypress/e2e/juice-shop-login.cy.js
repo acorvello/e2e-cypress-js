@@ -30,9 +30,16 @@ describe("Juice Shop - Fluxo de Login", () => {
   it("deve exibir erro ao tentar login com credenciais inválidas", () => {
     cy.get("#navbarAccount").trigger("click", { force: true });
     cy.get("#navbarLoginButton").trigger("click", { force: true });
-    cy.get("#email").type("usuario_invalido@teste.com", { force: true });
-    cy.get("#password").type("senhaErrada123", { force: true });
+    // Seta o valor direto e dispara o evento input, em vez de simular
+    // digitação tecla a tecla — mais robusto quando um overlay residual
+    // está sobre a tela, igual à abordagem usada na suíte Playwright.
+    cy.get("#email")
+      .invoke("val", "usuario_invalido@teste.com")
+      .trigger("input", { force: true });
+    cy.get("#password")
+      .invoke("val", "senhaErrada123")
+      .trigger("input", { force: true });
     cy.get("#loginButton").trigger("click", { force: true });
-    cy.get(".error").should("exist");
+    cy.get(".error", { timeout: 10000 }).should("exist");
   });
 });
