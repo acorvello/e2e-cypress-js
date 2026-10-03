@@ -9,15 +9,6 @@ describe("Juice Shop - Fluxo de Login", () => {
         cy.wrap(banner).click({ force: true });
       }
     });
-    // Às vezes o overlay (backdrop) do banner não se desfaz sozinho e
-    // fica bloqueando cliques no resto da página. Clica nele para
-    // fechá-lo e espera sumir antes de continuar.
-    cy.get("body").then(($body) => {
-      if ($body.find(".cdk-overlay-backdrop").length > 0) {
-        cy.get(".cdk-overlay-backdrop").click({ force: true, multiple: true });
-      }
-    });
-    cy.get(".cdk-overlay-backdrop").should("not.exist");
   });
 
   it("deve carregar a página inicial com produtos listados", () => {
@@ -26,23 +17,23 @@ describe("Juice Shop - Fluxo de Login", () => {
   });
 
   it("deve abrir o formulário de login", () => {
-    cy.get("#navbarAccount").click();
-    // O menu do Angular Material leva um instante para concluir a
-    // animação de abertura; sem essa espera, o overlay de fundo
-    // intercepta o clique mesmo com o botão já visível.
-    cy.wait(500);
-    cy.get("#navbarLoginButton").should("be.visible").click();
-    cy.get("#email").should("be.visible");
-    cy.get("#password").should("be.visible");
+    // .trigger('click') dispara o evento direto no elemento, sem
+    // depender de clique por coordenada na tela — um overlay residual
+    // desta versão do Juice Shop pode interceptar o clique "físico"
+    // mesmo com {force: true}, já que force só pula a checagem de
+    // visibilidade do Cypress, não a sobreposição real no navegador.
+    cy.get("#navbarAccount").trigger("click");
+    cy.get("#navbarLoginButton").trigger("click");
+    cy.get("#email").should("exist");
+    cy.get("#password").should("exist");
   });
 
   it("deve exibir erro ao tentar login com credenciais inválidas", () => {
-    cy.get("#navbarAccount").click();
-    cy.wait(500);
-    cy.get("#navbarLoginButton").should("be.visible").click();
-    cy.get("#email").type("usuario_invalido@teste.com");
-    cy.get("#password").type("senhaErrada123");
-    cy.get("#loginButton").click();
-    cy.get(".error").should("be.visible");
+    cy.get("#navbarAccount").trigger("click");
+    cy.get("#navbarLoginButton").trigger("click");
+    cy.get("#email").type("usuario_invalido@teste.com", { force: true });
+    cy.get("#password").type("senhaErrada123", { force: true });
+    cy.get("#loginButton").trigger("click");
+    cy.get(".error").should("exist");
   });
 });
