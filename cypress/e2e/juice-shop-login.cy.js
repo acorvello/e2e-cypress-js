@@ -56,7 +56,7 @@ describe("Juice Shop - Fluxo de Login", () => {
       .type("senhaErrada123", { force: true });
     cy.get("#email").should("have.value", "usuario_invalido@teste.com");
     cy.get("#password").should("have.value", "senhaErrada123");
-    cy.get("#loginButton").click();
+    cy.get("#loginButton").click({ force: true });
     cy.get(".error", { timeout: 10000 }).should("exist");
   });
 });
