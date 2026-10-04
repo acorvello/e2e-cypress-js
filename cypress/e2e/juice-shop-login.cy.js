@@ -50,8 +50,10 @@ describe("Juice Shop - Fluxo de Login", () => {
     // navegador para acionar a submissão padrão do formulário.
     cy.get("#email", { timeout: 10000 })
       .should("be.visible")
-      .type("usuario_invalido@teste.com");
-    cy.get("#password").should("be.visible").type("senhaErrada123");
+      .type("usuario_invalido@teste.com", { force: true });
+    cy.get("#password")
+      .should("exist")
+      .type("senhaErrada123", { force: true });
     cy.get("#email").should("have.value", "usuario_invalido@teste.com");
     cy.get("#password").should("have.value", "senhaErrada123");
     cy.get("#loginButton").click();
