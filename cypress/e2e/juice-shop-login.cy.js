@@ -17,7 +17,7 @@ function closeWelcomeBannerIfPresent() {
   });
 }
 
-describe("Juice Shop - Fluxo de Login", () => {
+describe("Cypress - Juice Shop - Fluxo de Login", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.get("app-mat-search-bar", { timeout: 10000 }).should("exist");
