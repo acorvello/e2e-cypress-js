@@ -52,3 +52,7 @@ setup.
 - Cover the cart and checkout flow
 - Add API tests alongside the UI tests
 - Integrate with AI-generated test scenario creation
+
+## ⚖️ License
+
+This repository is licensed under the **MIT License**. Feel free to clone, study, modify, and distribute the code for educational or portfolio purposes.
