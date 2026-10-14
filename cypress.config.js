@@ -11,6 +11,10 @@ module.exports = defineConfig({
       mochaJunitReporterReporterOptions: {
         mochaFile: "results/junit-[hash].xml",
         toConsole: false,
+        // classname = "<prefix>.<describe>"; o Jenkins separa pacote e classe
+        // pelo último ponto, então o describe NÃO pode conter pontos.
+        jenkinsMode: true,
+        jenkinsClassnamePrefix: "cypress.tests",
       },
     },
     setupNodeEvents(on, config) {
